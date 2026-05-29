@@ -1,12 +1,12 @@
 # Contributing
 
-Thanks for contributing to TrendLens! This repository is deliberately simple so a multi-person hackathon team can get started quickly.
+Thanks for contributing to TrendLens AI! This repository is deliberately simple so a multi-person hackathon team can get started quickly.
 
 Guidelines
 - Open issues for bugs or feature requests using the templates in .github/ISSUE_TEMPLATE.
-- Create branches with the pattern `team/<name>-<feature>` or `feature/<short-desc>`.
+- Follow the branching strategy in [docs/BRANCH_STRATEGY.md](docs/BRANCH_STRATEGY.md).
 - Keep PRs small and focused. Add a brief description and link related issues.
-- Use clear, imperative commit messages (e.g., "Add onboarding doc").
+- Use clear, imperative commit messages following conventional commits (e.g., "feat: add user auth", "fix: handle edge case").
 
 Communication
 - Use the team Slack/Discord channel for quick questions and standups.
