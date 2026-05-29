@@ -2,6 +2,12 @@
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "trendlens"
+version = "0.0.0"
+description = "TrendLens hackathon project"
+requires-python = ">=3.8"
+
 [tool.black]
 line-length = 88
 
