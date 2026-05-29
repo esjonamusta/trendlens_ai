@@ -1,0 +1,17 @@
+# Common
+.DS_Store
+.env
+.venv
+env/
+venv/
+__pycache__/
+node_modules/
+dist/
+build/
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs
+*.log

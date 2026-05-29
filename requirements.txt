@@ -1,0 +1,5 @@
+# Runtime and dev dependencies for Python stack
+pytest>=7.0
+black>=24.0
+flake8>=6.0
+
