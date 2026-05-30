@@ -1,4 +1,4 @@
-from trendlens.cli import greet
+from trendlens_ai.cli import greet
 
 
 def test_greet():

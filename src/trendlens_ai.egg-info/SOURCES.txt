@@ -1,0 +1,10 @@
+LICENSE
+README.md
+pyproject.toml
+src/trendlens_ai/__init__.py
+src/trendlens_ai/cli.py
+src/trendlens_ai.egg-info/PKG-INFO
+src/trendlens_ai.egg-info/SOURCES.txt
+src/trendlens_ai.egg-info/dependency_links.txt
+src/trendlens_ai.egg-info/top_level.txt
+tests/test_cli.py

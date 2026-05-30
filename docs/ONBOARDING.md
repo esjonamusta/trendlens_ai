@@ -1,6 +1,6 @@
 # Onboarding
 
-Welcome to TrendLens! Quick steps for new contributors:
+Welcome to TrendLens AI! Quick steps for new contributors:
 
 1. Read the `README.md`, `CONTRIBUTING.md`, and `CODE_OF_CONDUCT.md`.
 2. Review `docs/STACK_DECISION.md` and agree on stack choices in team chat.

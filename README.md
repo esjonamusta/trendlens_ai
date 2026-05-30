@@ -1,7 +1,7 @@
-TrendLens
-========
+TrendLens AI
+============
 
-TrendLens is a hackathon project to help product teams continuously discover and prioritize emerging trends relevant to their product.
+TrendLens AI is a hackathon project to help product teams continuously discover and prioritize emerging trends relevant to their product.
 
 This repository contains the project scaffold, onboarding docs, and contributor guides so the team can start collaborating quickly. Development of the actual tool will begin after team alignment.
 
