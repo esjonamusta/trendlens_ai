@@ -2,4 +2,6 @@
 pytest>=7.0
 black>=24.0
 flake8>=6.0
+langchain>=0.0.280
+openai>=0.28.0
 

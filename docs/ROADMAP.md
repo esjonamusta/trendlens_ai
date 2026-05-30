@@ -40,13 +40,13 @@
 **Lead:** Backend/AI Engineer  
 **Time:** 3 hours  
 **Tasks:**
-- [ ] Create base agent class with LangChain
+- [x] Create base agent class with LangChain-compatible API
 - [ ] Set up Crew AI orchestrator
-- [ ] Define agent roles and responsibilities
-- [ ] Create tool registry for agent functions
-- [ ] Set up agent logging and tracing
-- [ ] Create `src/trendlens_ai/agents/` folder structure
-- [ ] Write agent tests
+- [x] Define agent roles and responsibilities
+- [x] Create tool registry for agent functions
+- [x] Set up agent logging and tracing
+- [x] Create `src/trendlens_ai/agents/` folder structure
+- [x] Write agent tests
 
 **Deliverable:** Agent framework ready, example agent passes tests
 
