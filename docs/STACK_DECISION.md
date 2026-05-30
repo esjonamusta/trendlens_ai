@@ -2,7 +2,35 @@
 
 **Status:** ✅ DECIDED  
 **Date:** May 30, 2026  
-**Focus:** AI Agent-Driven Trend Detection
+**Product:** TrendLens AI - AI-Powered Trend Discovery for Product Managers  
+**Focus:** Collect → Cluster → Analyze → Visualize
+
+## Problem Statement
+
+Product managers spend hours monitoring multiple sources (Reddit, GitHub, HN, Twitter, Product Hunt) to spot emerging trends. They need an **AI tool that autonomously discovers trends, clusters related discussions, and surfaces actionable opportunities**.
+
+## Target User
+
+Product managers, founders, strategists who need to identify and prioritize emerging market opportunities without manual research.
+
+## MVP Scope
+
+**User Input:** Product description or category focus  
+
+**Processing Pipeline:**
+1. **Collect:** Fetch relevant discussions from Reddit, GitHub, HN, Twitter, Product Hunt
+2. **Cluster:** Group related discussions using AI (semantic similarity + engagement scoring)
+3. **Analyze:** Use LLM to explain WHY trends are emerging + identify opportunities
+4. **Visualize:** Display ranked trends with evidence and actionable insights
+
+**MVP Output:**
+- Ranked list of top 10-20 emerging trends
+- For each trend:
+  - **Trend name** (what people are discussing)
+  - **Momentum score** (engagement, growth velocity)
+  - **Why it's trending** (key factors, sentiment analysis)
+  - **Suggested opportunities** (actionable next steps)
+  - **Evidence** (links to source discussions, quote samples)
 
 ## Chosen Stack
 
@@ -61,27 +89,60 @@
 ## Key Agents
 
 ### 1. **Ingestion Agent**
-- Autonomously collect data from Reddit, Hacker News, GitHub, etc.
-- Runs on schedule (APScheduler)
-- Stores raw signals in database
-- Tool functions: `fetch_reddit()`, `fetch_hackernews()`, `fetch_github()`
+- **Input:** Product description from user
+- **Task:** Autonomously collect relevant discussions from Reddit, HN, GitHub, Twitter, Product Hunt
+- **Run:** On-demand (MVP) or scheduled (future)
+- **Output:** Normalized signals stored in database
+- **Tools:** 
+  - `fetch_reddit(query)` → posts + comments
+  - `fetch_hackernews(query)` → stories + discussions
+  - `fetch_github(query)` → issues + PRs + discussions
+  - `fetch_twitter(query)` → tweets + threads
+  - `fetch_producthunt()` → product launches
+  - `normalize_signal(raw_data)` → clean, standardized format
 
-### 2. **Analysis Agent**
-- Processes raw signals for patterns
-- Uses NLP to cluster similar topics
-- Detects emerging trends via statistical analysis
-- Tool functions: `cluster_signals()`, `compute_sentiment()`, `find_anomalies()`
+### 2. **Clustering Agent**
+- **Input:** Normalized signals from database
+- **Task:** Group related discussions into semantic clusters (trends)
+- **Method:** 
+  - NLP embeddings (spaCy or OpenAI embeddings)
+  - Semantic similarity clustering
+  - Score by engagement (upvotes, replies, momentum)
+- **Output:** Trend clusters with:
+  - Cluster ID & name (auto-generated or LLM-named)
+  - Size (number of signals)
+  - Aggregated score/engagement
+  - Timeline (first seen to latest)
+- **Tools:**
+  - `embed_text(text)` → embedding vector
+  - `cluster_by_similarity(embeddings, threshold)` → cluster assignments
+  - `score_by_engagement(signals)` → engagement scores
+  - `extract_trend_name(signals)` → LLM-generated trend name
 
 ### 3. **Insight Agent**
-- Synthesizes analysis into human-readable insights
-- Generates summaries and predictions
-- Answers user queries about trends
-- Tool functions: `query_trends()`, `generate_report()`, `forecast()`
+- **Input:** Trend clusters + original signals
+- **Task:** Analyze WHY clusters are trending + identify opportunities
+- **Method:** 
+  - LLM reasoning on signals, sentiment, velocity
+  - Extract key themes and narratives
+  - Identify emerging opportunities
+  - Suggest product actions
+- **Output:** For each trend:
+  - Why is it trending? (sentiment, engagement velocity, mentions)
+  - Opportunities (market gaps, feature suggestions)
+  - Competitive landscape
+  - Suggested actions
+- **Tools:**
+  - `analyze_sentiment(signals)` → sentiment distribution
+  - `calculate_velocity(signals)` → growth trend
+  - `extract_themes(signals)` → key topics/narratives
+  - `generate_opportunity_report(trend)` → LLM-generated opportunities
+  - `rank_by_opportunity_score(trends)` → prioritized list
 
-### 4. **Orchestrator Agent** (optional)
-- Coordinates multi-agent workflows
-- Delegates tasks based on priority
-- Manages resource allocation
+### 4. **Orchestrator Agent** (MVP: simple, can be enhanced)
+- **MVP:** Simple sequential execution (collect → cluster → analyze)
+- **Future:** Parallel execution, error handling, re-runs
+- **Task:** Coordinate multi-agent workflow, manage state, return final results
 
 ## Dependencies
 

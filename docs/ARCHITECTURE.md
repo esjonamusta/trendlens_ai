@@ -1,45 +1,89 @@
 # Architecture Overview
 
-This project uses **AI agents** to autonomously discover and analyze emerging trends across multiple data sources.
+**TrendLens AI** helps product managers identify and prioritize emerging trends by AI-powered clustering of product discussions and market signals.
+
+**User Problem:** Product managers need to quickly identify and prioritize emerging trends without manually monitoring multiple sources.
+
+**Solution:** AI agents that collect discussions, cluster by topic, analyze why they're trending, and surface opportunities.
 
 ## Core Architecture
 
 ```
-Data Sources → Agents → Analysis → Storage → API → Dashboard
+Product Description (Input)
+      ↓
+Data Collectors (Reddit, HN, GitHub, Twitter, Product Hunt)
+      ↓
+Normalize & Store Signals
+      ↓
+Clustering Agent (Group by topic + engagement)
+      ↓
+Insight Agent (Why is it trending? Opportunities?)
+      ↓
+Ranked Trends Dashboard
 ```
 
 ### Main Components
 
-**Ingestion:** Collectors for Reddit, Hacker News, Twitter, GitHub, etc.
-- Managed by autonomous Ingestion Agent
-- Runs on schedule via APScheduler
+**1. Input Layer**
+- User provides: product description, category, optional user stories
+- Defines scope for data collection
 
-**Processing:** AI agents for clustering, NLP, and trend detection
-- Ingestion Agent: scrapes and normalizes data
-- Analysis Agent: detects patterns and clusters
-- Insight Agent: generates summaries and predictions
+**2. Data Ingestion**
+- Multi-source collectors: Reddit, Hacker News, GitHub, Twitter, Product Hunt
+- Ingestion Agent fetches relevant discussions autonomously
+- Normalizes timestamps, metrics, and metadata
+- Stores raw signals in database
 
-**Storage:** PostgreSQL + TimescaleDB for trend metadata and time-series signals
-- Stores raw signals
-- Maintains agent memory and conversation history
-- Tracks trend evolution
+**3. AI Clustering & Analysis**
+- **Clustering Agent:** Groups related discussions into trend clusters
+  - Uses NLP embeddings (semantic similarity)
+  - Scores by engagement, momentum, relevance
+  - Identifies distinct trends from noise
+- **Insight Agent:** Explains WHY clusters are trending
+  - Analyzes engagement velocity
+  - Identifies emerging opportunities
+  - Generates actionable summaries
 
-**API:** FastAPI to expose agent capabilities
-- Query trends
-- Trigger analysis
-- Get insights
-- Manage agents
+**4. Storage**
+- PostgreSQL + TimescaleDB
+- Tables: signals, trends, trend_clusters, analysis_results, agent_runs
 
-**UI:** Streamlit dashboard for browsing trends, filtering, and viewing evidence
-- Real-time agent status
-- Trend exploration interface
-- Insight generation
+**5. API Endpoints**
+- `/api/analyze` — Trigger full pipeline
+- `/api/trends` — List identified trends with scores
+- `/api/trends/{id}` — Trend details + why + opportunities
+- `/api/signals` — Raw signals/discussions
 
-**Implementation:** See [docs/STACK_DECISION.md](STACK_DECISION.md) for the complete tech stack and setup.
+**6. Dashboard (Streamlit)**
+- Input: product description
+- Output: ranked trends with:
+  - **Trend name** (what people are talking about)
+  - **Score & momentum** (engagement metrics)
+  - **Why it's trending** (key factors, sentiment)
+  - **Opportunities** (actionable insights)
+  - **Evidence** (links to source discussions)
+
+## MVP Scope
+
+**Must have:**
+- Data collection from 3+ sources (Reddit, HN, GitHub)
+- Basic clustering (semantic grouping + engagement scoring)
+- Trend ranking by score
+- Simple dashboard showing top trends
+- Evidence links to source discussions
+- Explanation of why each trend is trending
+
+**Nice-to-have:**
+- Voice interface
+- Local LLM option
+- Real-time updates
+- Multi-agent orchestration
+- Advanced NLP models
 
 ## Design Principles
 
-- **Modular agents:** Each agent is independently testable and replaceable
-- **Tool-based:** Agents use tools (API calls) rather than direct database access
+- **User-centric:** Focus on product manager needs first
+- **Fast insights:** Results in seconds, not hours
+- **Transparent:** Show WHY trends matter (evidence-based)
+- **Actionable:** Surface opportunities, not just data
 - **Observable:** All agent reasoning is logged and traceable
-- **Hackathon-ready:** Rapid prototyping with LangChain and Streamlit
